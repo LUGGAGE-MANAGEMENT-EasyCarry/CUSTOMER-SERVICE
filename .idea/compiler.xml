@@ -7,13 +7,10 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.0.8/72cb8c203767a16051e24069e138831784116aee/spring-boot-configuration-processor-3.0.8.jar" />
         </processorPath>
-        <module name="luggage-system-customer-api.luggage-system-customer-api.main~1" />
+        <module name="com.luggagesystem.luggage-system-customer-api.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="com.luggagesystem.luggage-system-customer-api" target="17" />
-      <module name="com.luggagesystem.luggage-system-customer-api.main" target="17" />
-      <module name="com.luggagesystem.luggage-system-customer-api.test" target="17" />
       <module name="luggage-system-customer-api.luggage-system-customer-api.main" target="17" />
       <module name="luggage-system-customer-api.luggage-system-customer-api.test" target="17" />
     </bytecodeTargetLevel>
