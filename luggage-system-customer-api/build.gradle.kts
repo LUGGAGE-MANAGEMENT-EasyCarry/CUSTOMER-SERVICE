@@ -10,7 +10,7 @@ plugins {
 
 group = "com.luggagesystem"
 version = "0.0.1-SNAPSHOT"
-
+val mapStructVersion = "1.5.5.Final"
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
 }
@@ -20,6 +20,12 @@ repositories {
 	maven {
 		url = uri("http://10.115.210.111:8080/repository/maven-public/")
 		isAllowInsecureProtocol = true
+	}
+}
+
+kapt {
+	arguments {
+		arg("mapstruct.defaultComponentModel", "spring")
 	}
 }
 
@@ -51,8 +57,8 @@ dependencies {
 	}
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
-	implementation("org.mapstruct:mapstruct:1.5.3.Final")
-	kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
+	implementation("org.mapstruct:mapstruct:$mapStructVersion")
+	kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 }

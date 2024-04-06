@@ -2,9 +2,9 @@ package com.luggagesystem.luggagesystemcustomerapi.controller
 
 import com.luggagesystem.luggagesystemcustomerapi.domain.dto.CustomerRequest
 import com.luggagesystem.luggagesystemcustomerapi.domain.dto.CustomerResponse
-import com.luggagesystem.luggagesystemcustomerapi.domain.mapper.CustomerResponseMapper
 import com.luggagesystem.luggagesystemcustomerapi.service.CustomerService
-import org.mapstruct.factory.Mappers
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,26 +16,23 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/")
 class CustomerController(private val customerService: CustomerService) {
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     suspend fun getCustomerById(@PathVariable id: UUID): CustomerResponse {
-        val converter = Mappers.getMapper(CustomerResponseMapper::class.java)
-        return converter.convertToDto(customerService.getCustomerById(id))
+        return customerService.getCustomerById(id)
     }
 
     @GetMapping
     suspend fun getAllCustomers(): List<CustomerResponse> {
-        val converter = Mappers.getMapper(CustomerResponseMapper::class.java)
-        return converter.convertCustomerListItemsToCustomerListItemResponse(customerService.getAllCustomers())
+        return customerService.getAllCustomers()
     }
 
-    @PostMapping("/create")
-    suspend fun createCustomer(@RequestBody customerRequest: CustomerRequest): CustomerResponse {
-        val converter = Mappers.getMapper(CustomerResponseMapper::class.java)
-        val savedCustomer = customerService.createCustomer(converter.convertDtoToEntity(customerRequest))
-        return converter.convertToDto(savedCustomer)
+    @PostMapping
+    suspend fun createCustomer(@RequestBody customerRequest: CustomerRequest): ResponseEntity<CustomerResponse> {
+        val customer = customerService.createCustomer(customerRequest)
+        return ResponseEntity.status(HttpStatus.CREATED).body(customer)
     }
 
     @DeleteMapping("/{id}")
@@ -46,9 +43,6 @@ class CustomerController(private val customerService: CustomerService) {
 
     @PutMapping("/edit/{id}")
     suspend fun updateCustomer(@PathVariable id: UUID, @RequestBody customerRequest: CustomerRequest): CustomerResponse {
-        val converter = Mappers.getMapper(CustomerResponseMapper::class.java)
-        return converter.convertToDto(customerService.updateCustomer(id, customerRequest))
+        return customerService.updateCustomer(id, customerRequest)
     }
-
-
 }
